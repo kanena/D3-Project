@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!-- saved from url=(0055)http://www.akpsight.site/Z-d3/dashboard/processMap.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	
+	<title> Process Map </title>
+	
+	<link href="./Process Map_files/style.css" rel="stylesheet" type="text/css">
+	<link href="./Process Map_files/bootstrap.css" rel="stylesheet" type="text/css">
+	<style> nav.navbar.navbar-default { margin-bottom:0px; } svg { width:100% } </style>
+
+	<script src="./Process Map_files/d3.v3.min.js.download"></script>
+	<script src="./Process Map_files/dimple.v2.3.0.min.js.download"></script>
+	<script src="./Process Map_files/d3.tip.v0.6.3.js.download"></script>
+	<script src="./Process Map_files/jquery.min.js.download"></script>
+</head>
+<body>
+
+<div class="content">
+	<nav class="navbar navbar-default">
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+		<div class="navbar-header"><a class="navbar-brand" href="http://www.akpsight.site/Z-d3/dashboard/processMap.html#">D3 Project</a></div>
+		<ul class="nav navbar-nav">
+			<li><a href="http://www.akpsight.site/Z-d3/dashboard/index.html"> 3P Shot By Time </a></li>
+			<li><a href="http://www.akpsight.site/Z-d3/dashboard/dashboardPart2.html"> 3P Shot By Team </a></li>
+			<li><a href="http://www.akpsight.site/Z-d3/dashboard/dashboardPart3.html"> Impact Of Shooting On Star </a></li>
+		  </ul>
+		  <ul class="nav navbar-nav navbar-right">
+			<li><a href="http://www.akpsight.site/Z-d3/dashboard/processMap.html"> How we made our dashboard </a></li>
+		  </ul>
+		</div>
+	</nav>
+
+	<h1 class="title"> Process Map </h1>
+		<h2> Step 1: Setting up and using a Web Server </h2>
+			<p> Having a web server was an important part of this project. Without a local or online server, the XMLHttpRequest used to load our csv file 
+			could not processed within a browser </p>
+			<p> The server we used was Namecheap. We had hosting plan that allowed us to use a registered domain. I chose a domain I used for one of my test projects,
+			and set the directory to a non-visible link: <a href="http://www.akpsight.site/Z-d3/">http://www.akpsight.site/Z-d3/</a>. Here, I stored each graph into different
+			folders labeled G[n]. Each folder contained a CSV file that contained our data and an HTML file which turned that data into a visualization. 
+			</p><p>Keeping each graph in a different folder directory made debugging much simpler. Combining the graphs at the end of this project created issues due to referencing 
+			different versions of D3.js (discussed more later), so gradually adding all the graphs to one page would create too many problems to diagnose/test at one time. Once 
+			the general structure of folder directories was set up, keeping track of files and their functions was very simple.
+		</p><h2> Step 2: Applying HTML and CSS formatting </h2>
+			<p> Using HTML and CSS was an interesting part of our project. With each graph separated by folder, there was not much CSS to worry about initially. We added &lt;head&gt; tag 
+			sections to store Javascript APIs such as D3, dimple, a d3.tip extension, and jQuery. All content was stored in a div that creating padding; that way, words were not
+			too close to the edge of the web page. Our &lt;h1&gt; tag stored the title of dashboard in white with a blue background, while &lt;h2&gt; tags were titles for each graph.
+			The &lt;div&gt; tags within our content were used for each graph, which was created through javascript. One of our graph uses &lt;select&gt; and &lt;option&gt; tags to
+			filter different values within the CSV file, and we are planning to add this to our "Impact Of Shooting On Star" graph within the 2nd project submission. </p>
+			<p> We used CSS to format clickable &lt;a&gt; tags into blue buttons that changed color when someone hovered over it. This created navigation between the different pages
+			of our project. It also was used for one of our graphs to change the color of the bars and the default formatting features within the D3.js API </p>
+		<h2> Step 3: Gathering and Integrating Data </h2>
+			<p>The data for the first graph came from basketball reference and was copied and pasted into word.  The page was 
+			<a href="http://www.basketball-reference.com/leagues/NBA_stats.html"> http://www.basketball-reference.com/leagues/NBA_stats.html </a>
+			and included the league averages for every major stat in each season.  I put the data in csv file and deleted all the years before 1979 because the NBA did not have a three point shot
+			before this year. I then cut down the different stat categories to only include 3 point field goal attempts and makes to see how they changed throughout the years.
+			</p><p>The data from the second graph also came from basketball reference but I had to go each team's individual page for the 2015-2016 season. From there I copied and pasted each teams
+			wins, 3 point field goal percentage, and 3 point attempts per game into a csv file. </p>
+			<p> To get the data for the third graph, the first thing I did I had to do was determine who each
+			team best player and best 3 point shooter was. To do this I looked at this season's data for every team from basketball reference.  I used total points scored over the season to
+ 			pick every team's best player, and I used a combination of 3 point percentage and total 3 point makes to pick every team's best 3 point shooter.  I took note of every instance where
+			the team's best player was also their best 3 point shooter. When this happened I chose the player with the second most 3 point makes as the best shooter.  When I had these 60
+			players I went to stats.nba.com/impact to see how the best player fared with and without the best shooter on the court.  For every team I copied and pasted the best player's stats
+			when the top 3 point shooter was on the court and when they were off the court into an csv file. </p>
+		<h2> Step 4: Utilizing D3.js within the dimple.js API </h2>
+			<p> Using D3.js was probably the most challenging part of this project. For our graph that did not use the dimple.js extension, we set the xAxis and yAxis with the
+			d3.scale.ordinal() and d3.scale.linear() commands, setting the range dependent on the width we wanted the graph to take up. The d3.tip() function was an API extension of D3.js
+			which allowed us to display a pop-up box displaying specific stats, depending on the values specified within our &lt;select&gt; tag. After these variables were set, we appended
+			the svg to our &lt;div&gt; containing the id of the graph, setting the width, height, and position of the graph. svg.call([tip object]) allowed us to incorporate the d3.tip API
+			into our graph.</p> 
+			<p> d3.csv imported all of our data from the CSV file into the svg object, which contained properties values set as we just described. We set the domain of x to include team names
+			placed within the &lt;select&gt; tag. The y domain range was from 0 to the maximum value from the selected stat; if the stat included percentages, the max was set at 1.
+			svg.append("g") was used to set the label values located on the x-axis and y-axis. The svg.selectAll(".bar") set the heights of the bars for each player's stat, and performed
+			calculations to grab the right x-axis and y-axis values. .on('mouseover', tip.show) let us show the pop-up box, displaying relevant statistics for interpreting the graph. </p>
+			<p> Making graphs using dimple.js functions was much simpler to do. dimple.newSvg("#Graph1", 600, 600) creates a new svg container that has the width, height, and the id the
+			new svg is being imported into. Using d3.csv([file location], function(data)), we then make assign a graph to a variable using dimple.chart(svg, data). We append data attributes
+			to this new chart object using myChart.addCategoryAxis("x", [name]) and var myAxisY = myChart.addMeasureAxis("y", [name]); "name" represents any column of data you want to represent
+			from the CSV data. Various formating goals were obtained by going online and looking at dimple.js documentation, which allowed us to edit information such as chart titles, axis
+			labels, min/max values for any axis. myChart.addSeries([name], dimple.plot.[chart type]) allowed us set which groups were going to be compared on the graph, and what chart-type
+			would be displayed. Our chart types were a line, bubble, and bar chart, sometimes using multiple category names and measure axis to show different views of data. </p>
+		<h2> Step 5: Utilizing jQuery to create the D3.js graphs </h2>
+			<p>jQuery helped us load our graphs into the page. After clicking on different filter options, someone can then click the button "Make Chart" to load his results. We assigned
+			the function name "filterChart()" to load values from &lt;select&gt; tags, targeting its id name and using the $("#chart1a").val() command. After reading these lines, our 
+			makeChart(teamName, statType) function took in these 2 &lt;select&gt; values, recreating the graph to display the correct specified stats 
+		</p><h2> Continual Work: Getting and formatting data </h2>
+			<p> Throughout this project, we looked at what types of insights we could provide and create through our visualizations. We were able to grab data from multiple source online, and
+			reformatted the CVS files to contain parameter names and values that allowed us to render our graphs with meaningful insights </p>
+
+</div></body></html>
